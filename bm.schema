@@ -1,16 +1,18 @@
 ((w)=>{
  const p='cssdump';
  (w[p]||(w[p]=(()=>{
-	const c=w.console||((f)=>{return{log:f,info:f}})(()=>{});
-	let dumping=false;
-	c.info(p);
+	function inibit(e){e.stopImmediatePropagation();e.stopPropagation();e.preventDefault();return false}
+	const c=w.console||((f)=>{return{log:f,info:f,group:f,groupEnd:f}})(()=>{});
+	const events=[];
+	let dumps=0,dumping=false;
 	return (w)=>{
 	 if(dumping!==true){
 		dumping=true;
+		c.group(p,++dumps);
 		//..
+		c.groupEnd();
 		dumping=false;
-	};
-	 c.info(dumping);
+	 };
 	};
  })()))(w);
 })(window);
