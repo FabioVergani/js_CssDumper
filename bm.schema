@@ -1,0 +1,18 @@
+((w)=>{
+ const p='cssdump';
+ (w[p]||(w[p]=(()=>{
+	const c=w.console||((f)=>{return{log:f,info:f}})(()=>{});
+	let dumping=false;
+	c.info(p);
+	return (w)=>{
+	 if(dumping!==true){
+		dumping=true;
+		//..
+		dumping=false;
+	};
+	 c.info(dumping);
+	};
+ })()))(w);
+})(window);
+//
+document.getElementById('button').onclick=window.cssdump;
