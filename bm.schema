@@ -1,20 +1,32 @@
+//@fabio
 ((w)=>{
- const p='cssdump';
- (w[p]||(w[p]=(()=>{
+ (w.cssdump||(w.cssdump=((w)=>{
 	function inibit(e){e.stopImmediatePropagation();e.stopPropagation();e.preventDefault();return false}
-	const c=w.console||((f)=>{return{log:f,info:f,group:f,groupEnd:f}})(()=>{});
-	const events=[];
-	let dumps=0,dumping=false;
-	return (w)=>{
-	 if(dumping!==true){
-		dumping=true;
-		c.group(p,++dumps);
-		//..
+	function reScroll(){w.scrollTo.apply(w,events.lastScroll)}
+	function on(a,b){remEL(a,b);addEL(a,b)}
+	function at(a,b){on(a,function f(x){b(x);remEL(a,f)})}
+	//
+	function dump(evt){
+		const d=evt.target,dE=d.documentElement;
+		events.off(true);
+		Ob.observe((Ob.t=dE),Ob.i);
+		c.group('dump',++dumps);
+		//
+		c.dir(evt);
+		c.dir(dE);
+		//...
+		//
 		c.groupEnd();
-		dumping=false;
-	 };
-	};
- })()))(w);
+		Ob.disconnect();
+		events.off(false);
+	}
+	const MO=w.MutationObserver,Ob=new MO(function(m,o){o.disconnect();let i=m.length;while(i--){o.f(m[i],o)};o.observe(o.t,o.i);}),addEL=w.addEventListener,remEL=w.removeEventListener,c=w.console,d=w.document,Keys=w.Object.keys,events=Keys(w).filter((s)=>s.startsWith('on')).map(s=>s.substr(2));
+	let dumping=false,dumps=0;
+	events.off=function(v){const m=this,f=((dumping=v)?(m.lastScroll=[w.scrollX,w.scrollY],addEL):remEL),g=inibit;f('scroll',reScroll,true);let i=m.length;while(i--){f(m[i],g,true)}};
+	Ob.f=function(e){const s=e.type,t=e.target,v=e.oldValue;if(s!=='characterData'){if(s==='attributes'){const n=e.attributeName;if(t.getAttribute(n)!==v){t.setAttribute(n,v)}}}else if(t.nodeType===3 && t.textContent!==v){t.textContent=v}};
+	Ob.i={subtree:true,attributes:true,attributeOldValue:true,characterData:true,characterDataOldValue:true};
+	return (w)=>{if(dumping!==true){d.readyState!=='complete'?at('load',dump):dump({target:d})}}
+ })(w)))(w);
 })(window);
-//
-document.getElementById('button').onclick=window.cssdump;
+//==========================================================================================================================================================================================================================================================
+document.getElementById('button').onclick=cssdump;
