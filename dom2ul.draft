@@ -1,0 +1,23 @@
+const d=document,
+frag=d.createDocumentFragment(),
+tree=frag.appendChild(d.createElement('div')),
+traverse=function(branch,node,depth,num){
+ const m=node.children,l=m.length;
+ let x;
+ if(l<1){//li
+	x=branch.appendChild(d.createElement('li'));
+ }else{//ol
+	x=branch.appendChild(d.createElement('ul'));
+	j=depth+1;
+	let e,i=0;
+	while(i<l){
+	 e=m[i];
+	 traverse(x,e,j,++i);
+	};
+ };
+ x.insertAdjacentText('afterbegin',depth+'.'+num+':'+node.tagName);
+};
+//=================================================================
+
+traverse(tree,document.body,0,1);
+document.body.appendChild(tree);
